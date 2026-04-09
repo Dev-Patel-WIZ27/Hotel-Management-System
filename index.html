@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Canopy Retreat – Smart Check-In System</title>
+  <meta name="description" content="The Canopy Retreat simplifies hotel check-ins with a streamlined digital experience — fast, secure, and paperless." />
+  <meta name="author" content="Dev-Patel-WIZ27" />
+  <meta property="og:title" content="The Canopy Retreat – Smart Check-In System" />
+  <meta property="og:description" content="Instant digital check-in, room selection, and guest management in one place." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Sidebar Navigation ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-logo">CR</div>
+      <div class="brand-info">
+        <span class="brand-name">Canopy Retreat</span>
+        <span class="brand-tag">Hotel System</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-step="1" onclick="sidebarNav(1)">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Check-In</span>
+        <span class="nav-status" id="nav-status-1">Active</span>
+      </button>
+      <button class="nav-item" data-step="2" onclick="sidebarNav(2)">
+        <span class="nav-icon">👤</span>
+        <span class="nav-label">Guest Profile</span>
+        <span class="nav-dot" id="nav-dot-2"></span>
+      </button>
+      <button class="nav-item" data-step="3" onclick="sidebarNav(3)">
+        <span class="nav-icon">📋</span>
+        <span class="nav-label">Personal Info</span>
+        <span class="nav-dot" id="nav-dot-3"></span>
+      </button>
+      <button class="nav-item" data-step="4" onclick="sidebarNav(4)">
+        <span class="nav-icon">🪪</span>
+        <span class="nav-label">ID Verification</span>
+        <span class="nav-dot" id="nav-dot-4"></span>
+      </button>
+      <button class="nav-item" data-step="5" onclick="sidebarNav(5)">
+        <span class="nav-icon">✍️</span>
+        <span class="nav-label">Signature</span>
+        <span class="nav-dot" id="nav-dot-5"></span>
+      </button>
+      <button class="nav-item" data-step="6" onclick="sidebarNav(6)">
+        <span class="nav-icon">🔍</span>
+        <span class="nav-label">Review</span>
+        <span class="nav-dot" id="nav-dot-6"></span>
+      </button>
+      <button class="nav-item" data-step="7" onclick="sidebarNav(7)">
+        <span class="nav-icon">🛏️</span>
+        <span class="nav-label">Room Selection</span>
+        <span class="nav-dot" id="nav-dot-7"></span>
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-help">
+        <span>🔒</span>
+        <span>256-bit Encrypted</span>
+      </div>
+      <div class="sidebar-version">v2.1.0</div>
+    </div>
+  </aside>
+
+  <!-- ── Mobile Header ── -->
+  <header class="mobile-header">
+    <div class="mobile-brand">
+      <div class="brand-logo-sm">CR</div>
+      <span class="brand-name-sm">Canopy Retreat</span>
+    </div>
+    <div class="mobile-progress-bar">
+      <div class="mobile-progress-fill" id="mobile-progress-fill" style="width:14.28%"></div>
+    </div>
+  </header>
+
+  <!-- ── Main Content ── -->
+  <main class="main-content">
+
+    <!-- SCREEN 1: LANDING / CHECK-IN -->
+    <div class="screen active" id="screen-1">
+      <div class="welcome-split">
+        <div class="welcome-left">
+          <div class="welcome-eyebrow">Welcome Back</div>
+          <h1 class="welcome-heading">Ready to<br/><span class="gradient-text">Check In?</span></h1>
+          <p class="welcome-desc">Enter your booking reference to begin your seamless, paperless check-in experience.</p>
+          <div class="features-list">
+            <div class="feature-item"><span class="feature-icon">⚡</span> Instant verification</div>
+            <div class="feature-item"><span class="feature-icon">📱</span> Digital-first process</div>
+            <div class="feature-item"><span class="feature-icon">🔒</span> Secure & encrypted</div>
+          </div>
+        </div>
+        <div class="welcome-right">
+          <div class="checkin-card">
+            <div class="checkin-card-header">
+              <span class="checkin-card-badge">🏨 ONLINE CHECK-IN</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Booking Reference</label>
+              <div class="input-row">
+                <span class="input-prefix">🪪</span>
+                <input 
+                  class="form-input" 
+                  id="booking-ref"
+                  type="text" 
+                  placeholder="e.g. CR-20240001" 
+                  autocomplete="off"
+                />
+              </div>
+              <p class="form-hint">Found in your booking confirmation email</p>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Check-in Date</label>
+              <div class="input-row">
+                <span class="input-prefix">📅</span>
+                <input class="form-input" id="checkin-date-input" type="date" />
+              </div>
+            </div>
+            <button class="btn-primary" id="btn-start" onclick="startCheckin()">
+              Begin Check-In <span class="arrow">→</span>
+            </button>
+            <p class="checkin-note">New booking? <a href="#" class="link-accent">Register here</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 2: GUEST PROFILE -->
+    <div class="screen" id="screen-2">
+      <div class="screen-header">
+        <div class="step-badge">Step 1 of 5</div>
+        <h2 class="screen-title">Guest Profile</h2>
+        <p class="screen-desc">We found your booking. Please confirm before proceeding.</p>
+      </div>
+      <div class="profile-grid">
+        <div class="booking-summary-card">
+          <div class="bsc-top">
+            <div>
+              <div class="bsc-label">Booking Ref</div>
+              <div class="bsc-value" id="bsc-ref">—</div>
+            </div>
+            <div class="bsc-status-badge">Confirmed ✓</div>
+          </div>
+          <div class="bsc-body">
+            <img src="https://i.pinimg.com/736x/a5/b6/3f/a5b63fff55e0ef346eaaecaf36d0f879.jpg" alt="Property" class="bsc-img" />
+            <div class="bsc-details">
+              <div class="bsc-row">
+                <span class="bsc-key">📅 Check-in</span>
+                <span class="bsc-val" id="bsc-checkin">—</span>
+              </div>
+              <div class="bsc-row">
+                <span class="bsc-key">📍 Property</span>
+                <span class="bsc-val">The Canopy Retreat</span>
+              </div>
+              <div class="bsc-row">
+                <span class="bsc-key">🌙 Duration</span>
+                <span class="bsc-val">3 Nights</span>
+              </div>
+              <div class="bsc-row">
+                <span class="bsc-key">🛏️ Room</span>
+                <span class="bsc-val">To be selected</span>
+              </div>
+            </div>
+          </div>
+          <div class="bsc-footer">
+            <span class="bsc-footer-label">Status</span>
+            <span class="bsc-footer-value pending">⏳ Pending Check-In</span>
+          </div>
+        </div>
+        <div class="profile-info-panel">
+          <div class="pip-title">What's Next?</div>
+          <div class="pip-step"><span class="pip-icon completed">✓</span><span>Booking confirmed</span></div>
+          <div class="pip-step"><span class="pip-icon active">2</span><span>Fill personal details</span></div>
+          <div class="pip-step"><span class="pip-icon">3</span><span>Upload ID proof</span></div>
+          <div class="pip-step"><span class="pip-icon">4</span><span>Digital signature</span></div>
+          <div class="pip-step"><span class="pip-icon">5</span><span>Select room & confirm</span></div>
+        </div>
+      </div>
+      <div class="action-bar">
+        <button class="btn-ghost" onclick="goBack()">← Back</button>
+        <button class="btn-primary" onclick="nextScreen()">Confirm & Continue →</button>
+      </div>
+    </div>
+
+    <!-- SCREEN 3: PERSONAL DETAILS -->
+    <div class="screen" id="screen-3">
+      <div class="screen-header">
+        <div class="step-badge">Step 2 of 5</div>
+        <h2 class="screen-title">Personal Information</h2>
+        <p class="screen-desc">Please enter accurate details as per your government ID.</p>
+      </div>
+      <div class="step-progress">
+        <div class="sp-item done">Personal</div>
+        <div class="sp-line"></div>
+        <div class="sp-item">ID Proof</div>
+        <div class="sp-line"></div>
+        <div class="sp-item">Signature</div>
+        <div class="sp-line"></div>
+        <div class="sp-item">Room</div>
+      </div>
+      <div class="form-card">
+        <div class="form-card-title">👤 Primary Guest</div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <div class="input-row">
+              <input class="form-input" id="first-name" type="text" placeholder="First name" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <div class="input-row">
+              <input class="form-input" id="last-name" type="text" placeholder="Last name" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <div class="input-row">
+            <span class="input-prefix">✉️</span>
+            <input class="form-input" id="guest-email" type="email" placeholder="your@email.com" />
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <div class="input-row">
+              <span class="input-prefix">📱</span>
+              <input class="form-input" id="guest-phone" type="tel" placeholder="+91 XXXXX XXXXX" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Date of Birth</label>
+            <div class="input-row">
+              <span class="input-prefix">🎂</span>
+              <input class="form-input" id="guest-dob" type="date" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nationality</label>
+          <div class="input-row select-row">
+            <span class="input-prefix">🌍</span>
+            <select class="form-input" id="guest-nationality">
+              <option value="">Select nationality</option>
+              <option>Indian</option>
+              <option>American</option>
+              <option>British</option>
+              <option>Australian</option>
+              <option>Canadian</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="add-guest-strip" onclick="showToast('ℹ️ Additional guest form coming soon!', 'info')">
+        <span>+ Add Additional Guest</span>
+        <span class="ags-badge">Optional</span>
+      </div>
+      <div class="action-bar">
+        <button class="btn-ghost" onclick="goBack()">← Back</button>
+        <button class="btn-primary" onclick="savePersonal()">Save & Continue →</button>
+      </div>
+    </div>
+
+    <!-- SCREEN 4: ID VERIFICATION -->
+    <div class="screen" id="screen-4">
+      <div class="screen-header">
+        <div class="step-badge">Step 3 of 5</div>
+        <h2 class="screen-title">ID Verification</h2>
+        <p class="screen-desc">Provide your government-issued identification for verification.</p>
+      </div>
+      <div class="step-progress">
+        <div class="sp-item done">Personal</div>
+        <div class="sp-line done"></div>
+        <div class="sp-item done">ID Proof</div>
+        <div class="sp-line"></div>
+        <div class="sp-item">Signature</div>
+        <div class="sp-line"></div>
+        <div class="sp-item">Room</div>
+      </div>
+      <div class="id-scanner-area">
+        <div class="scanner-frame">
+          <img src="https://i.pinimg.com/originals/67/f8/a3/67f8a37746c13cfda5c8700148c75b2f.png" alt="ID Document" class="scanner-img" />
+          <div class="scanner-overlay">
+            <div class="scanner-corners tl"></div>
+            <div class="scanner-corners tr"></div>
+            <div class="scanner-corners bl"></div>
+            <div class="scanner-corners br"></div>
+            <div class="scanner-beam"></div>
+          </div>
+          <div class="scanner-label">Document Preview</div>
+        </div>
+        <button class="btn-ghost btn-sm" onclick="showToast('📷 Camera upload coming soon!', 'info')">📷 Scan with Camera</button>
+      </div>
+      <div class="form-card">
+        <div class="form-card-title">🪪 Document Details</div>
+        <div class="form-group">
+          <label class="form-label">Document Type</label>
+          <div class="input-row select-row">
+            <span class="input-prefix">📄</span>
+            <select class="form-input" id="id-type">
+              <option value="">Select document type</option>
+              <option>Passport</option>
+              <option>Aadhar Card</option>
+              <option>Voter ID</option>
+              <option>Driver's License</option>
+              <option>PAN Card</option>
+              <option>National ID Card</option>
+              <option>Residence Permit</option>
+              <option>Work Permit</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Document Number</label>
+            <div class="input-row">
+              <span class="input-prefix">🔢</span>
+              <input class="form-input" id="id-number" type="text" placeholder="Document number" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Expiry Date</label>
+            <div class="input-row">
+              <span class="input-prefix">📅</span>
+              <input class="form-input" id="id-expiry" type="date" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Issuing Country</label>
+          <div class="input-row select-row">
+            <span class="input-prefix">🌍</span>
+            <select class="form-input" id="id-country">
+              <option value="">Select country</option>
+              <option>India</option>
+              <option>United States</option>
+              <option>United Kingdom</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="action-bar">
+        <button class="btn-ghost" onclick="goBack()">← Back</button>
+        <button class="btn-primary" onclick="saveIDDetails()">Save & Continue →</button>
+      </div>
+    </div>
+
+    <!-- SCREEN 5: SIGNATURE -->
+    <div class="screen" id="screen-5">
+      <div class="screen-header">
+        <div class="step-badge">Step 4 of 5</div>
+        <h2 class="screen-title">Digital Signature</h2>
+        <p class="screen-desc">Sign below to authorize your check-in and agree to the hotel policy.</p>
+      </div>
+      <div class="step-progress">
+        <div class="sp-item done">Personal</div>
+        <div class="sp-line done"></div>
+        <div class="sp-item done">ID Proof</div>
+        <div class="sp-line done"></div>
+        <div class="sp-item done">Signature</div>
+        <div class="sp-line"></div>
+        <div class="sp-item">Room</div>
+      </div>
+      <div class="signature-wrapper">
+        <div class="sig-instructions">
+          <span>✍️</span> Sign using your mouse, trackpad, or finger (on touch devices)
+        </div>
+        <div class="sig-canvas-box" id="sig-box">
+          <canvas id="sig-canvas"></canvas>
+          <div class="sig-placeholder" id="sig-placeholder">Your signature here...</div>
+          <div class="sig-baseline"></div>
+        </div>
+        <div class="sig-actions">
+          <button class="btn-ghost btn-sm" onclick="clearSig()">🗑️ Clear</button>
+          <span class="sig-size-label" id="sig-size-label">Canvas ready</span>
+        </div>
+      </div>
+      <div class="consent-panel">
+        <label class="consent-row">
+          <input type="checkbox" id="consent-1" class="cbox" />
+          <span class="cbox-ui"></span>
+          <span>I agree to the <a href="#" class="link-accent">Terms & Conditions</a> of The Canopy Retreat</span>
+        </label>
+        <label class="consent-row">
+          <input type="checkbox" id="consent-2" class="cbox" />
+          <span class="cbox-ui"></span>
+          <span>I confirm all provided information is accurate and truthful</span>
+        </label>
+        <label class="consent-row">
+          <input type="checkbox" id="consent-3" class="cbox" />
+          <span class="cbox-ui"></span>
+          <span>I have read and understood the hotel's <a href="#" class="link-accent">Privacy Policy</a></span>
+        </label>
+      </div>
+      <div class="action-bar">
+        <button class="btn-ghost" onclick="goBack()">← Back</button>
+        <button class="btn-primary" onclick="saveSignature()">Confirm & Review →</button>
+      </div>
+    </div>
+
+    <!-- SCREEN 6: REVIEW -->
+    <div class="screen" id="screen-6">
+      <div class="screen-header">
+        <div class="step-badge">Review</div>
+        <h2 class="screen-title">Preview & Confirm</h2>
+        <p class="screen-desc">Double-check your information before final submission.</p>
+      </div>
+      <div class="review-container">
+        <div class="review-block">
+          <div class="review-block-title">📋 Booking Information</div>
+          <div class="rv-row"><span class="rv-k">Reference</span><span class="rv-v" id="rv-ref">—</span></div>
+          <div class="rv-row"><span class="rv-k">Check-in Date</span><span class="rv-v" id="rv-date">—</span></div>
+        </div>
+        <div class="review-block">
+          <div class="review-block-title">👤 Personal Details</div>
+          <div class="rv-row"><span class="rv-k">Full Name</span><span class="rv-v" id="rv-name">—</span></div>
+          <div class="rv-row"><span class="rv-k">Email</span><span class="rv-v" id="rv-email">—</span></div>
+          <div class="rv-row"><span class="rv-k">Phone</span><span class="rv-v" id="rv-phone">—</span></div>
+          <div class="rv-row"><span class="rv-k">Date of Birth</span><span class="rv-v" id="rv-dob">—</span></div>
+          <div class="rv-row"><span class="rv-k">Nationality</span><span class="rv-v" id="rv-nationality">—</span></div>
+        </div>
+        <div class="review-block">
+          <div class="review-block-title">🪪 ID Verification</div>
+          <div class="rv-row"><span class="rv-k">Document Type</span><span class="rv-v" id="rv-id-type">—</span></div>
+          <div class="rv-row"><span class="rv-k">Document Number</span><span class="rv-v" id="rv-id-number">—</span></div>
+          <div class="rv-row"><span class="rv-k">Expiry Date</span><span class="rv-v" id="rv-id-expiry">—</span></div>
+          <div class="rv-row"><span class="rv-k">Issuing Country</span><span class="rv-v" id="rv-id-country">—</span></div>
+        </div>
+        <div class="edit-reminder">
+          <span>✏️</span> Need to change something? Use the sidebar or the Back button.
+        </div>
+      </div>
+      <div class="action-bar">
+        <button class="btn-ghost" onclick="goBack()">← Back</button>
+        <button class="btn-primary" onclick="proceedToRoom()">Select Room →</button>
+      </div>
+    </div>
+
+    <!-- SCREEN 7: ROOM SELECTION -->
+    <div class="screen" id="screen-7">
+      <div class="screen-header">
+        <div class="step-badge">Step 5 of 5</div>
+        <h2 class="screen-title">Choose Your Room</h2>
+        <p class="screen-desc">Select the room type that best fits your stay.</p>
+      </div>
+      <div class="step-progress">
+        <div class="sp-item done">Personal</div>
+        <div class="sp-line done"></div>
+        <div class="sp-item done">ID Proof</div>
+        <div class="sp-line done"></div>
+        <div class="sp-item done">Signature</div>
+        <div class="sp-line done"></div>
+        <div class="sp-item done">Room</div>
+      </div>
+      <div class="room-filter-bar">
+        <button class="rfb-btn active" onclick="filterRooms('all', this)">All</button>
+        <button class="rfb-btn" onclick="filterRooms('standard', this)">Standard</button>
+        <button class="rfb-btn" onclick="filterRooms('premium', this)">Premium</button>
+        <button class="rfb-btn" onclick="filterRooms('suite', this)">Suites</button>
+      </div>
+      <div class="rooms-grid" id="rooms-grid">
+        <div class="room-tile" data-cat="standard" onclick="pickRoom(this,'Single Room','₹2,499/night','🛏️')">
+          <div class="rt-emoji">🛏️</div>
+          <div class="rt-name">Single Room</div>
+          <div class="rt-features"><span>📶 WiFi</span><span>🧊 AC</span><span>📺 TV</span></div>
+          <div class="rt-price">₹2,499 <span>/night</span></div>
+          <div class="rt-cat-badge">Standard</div>
+        </div>
+        <div class="room-tile" data-cat="standard" onclick="pickRoom(this,'Double Room','₹3,799/night','🛌')">
+          <div class="rt-emoji">🛌</div>
+          <div class="rt-name">Double Room</div>
+          <div class="rt-features"><span>📶 WiFi</span><span>🧊 AC</span><span>🛁 Bathtub</span></div>
+          <div class="rt-price">₹3,799 <span>/night</span></div>
+          <div class="rt-cat-badge">Standard</div>
+        </div>
+        <div class="room-tile" data-cat="standard" onclick="pickRoom(this,'Twin Room','₹3,499/night','🏠')">
+          <div class="rt-emoji">🏠</div>
+          <div class="rt-name">Twin Room</div>
+          <div class="rt-features"><span>📶 WiFi</span><span>🧊 AC</span><span>👥 2 Beds</span></div>
+          <div class="rt-price">₹3,499 <span>/night</span></div>
+          <div class="rt-cat-badge">Standard</div>
+        </div>
+        <div class="room-tile" data-cat="premium" onclick="pickRoom(this,'Deluxe Room','₹5,199/night','⭐')">
+          <div class="rt-emoji">⭐</div>
+          <div class="rt-name">Deluxe Room</div>
+          <div class="rt-features"><span>📶 WiFi</span><span>🧊 AC</span><span>🍾 Mini-bar</span></div>
+          <div class="rt-price">₹5,199 <span>/night</span></div>
+          <div class="rt-cat-badge premium">Premium</div>
+        </div>
+        <div class="room-tile" data-cat="premium" onclick="pickRoom(this,'Executive Room','₹7,199/night','💼')">
+          <div class="rt-emoji">💼</div>
+          <div class="rt-name">Executive Room</div>
+          <div class="rt-features"><span>📶 WiFi</span><span>🏋️ Gym</span><span>🍽️ Breakfast</span></div>
+          <div class="rt-price">₹7,199 <span>/night</span></div>
+          <div class="rt-cat-badge premium">Premium</div>
+        </div>
+        <div class="room-tile" data-cat="premium" onclick="pickRoom(this,'Family Room','₹6,499/night','👨‍👩‍👧‍👦')">
+          <div class="rt-emoji">👨‍👩‍👧‍👦</div>
+          <div class="rt-name">Family Room</div>
+          <div class="rt-features"><span>📶 WiFi</span><span>🧊 AC</span><span>🛹 Kids Area</span></div>
+          <div class="rt-price">₹6,499 <span>/night</span></div>
+          <div class="rt-cat-badge premium">Premium</div>
+        </div>
+        <div class="room-tile" data-cat="suite" onclick="pickRoom(this,'Junior Suite','₹9,799/night','👑')">
+          <div class="rt-emoji">👑</div>
+          <div class="rt-name">Junior Suite</div>
+          <div class="rt-features"><span>📶 WiFi</span><span>🛁 Jacuzzi</span><span>🌆 City View</span></div>
+          <div class="rt-price">₹9,799 <span>/night</span></div>
+          <div class="rt-cat-badge suite">Suite</div>
+        </div>
+        <div class="room-tile" data-cat="suite" onclick="pickRoom(this,'Presidential Suite','₹18,999/night','🏆')">
+          <div class="rt-emoji">🏆</div>
+          <div class="rt-name">Presidential Suite</div>
+          <div class="rt-features"><span>🏖️ Private Pool</span><span>🍽️ Butler</span><span>🎭 Lounge</span></div>
+          <div class="rt-price">₹18,999 <span>/night</span></div>
+          <div class="rt-cat-badge suite">Suite</div>
+        </div>
+      </div>
+      <div class="selected-room-bar" id="sel-room-bar" style="display:none;">
+        <div class="srb-left">
+          <span class="srb-emoji" id="srb-emoji">🛏️</span>
+          <div>
+            <div class="srb-name" id="srb-name">—</div>
+            <div class="srb-price" id="srb-price">—</div>
+          </div>
+        </div>
+        <button class="btn-primary btn-compact" onclick="confirmCheckin()">Confirm Check-In ✓</button>
+      </div>
+      <div class="action-bar" id="room-action-no-selection">
+        <button class="btn-ghost" onclick="goBack()">← Back</button>
+      </div>
+    </div>
+
+    <!-- SCREEN 8: SUCCESS -->
+    <div class="screen" id="screen-8">
+      <div class="success-screen">
+        <div class="confetti-area" id="confetti-area"></div>
+        <div class="success-icon-wrap">
+          <div class="success-pulse-ring r1"></div>
+          <div class="success-pulse-ring r2"></div>
+          <div class="success-pulse-ring r3"></div>
+          <div class="success-icon">✓</div>
+        </div>
+        <h1 class="success-heading">You're Checked In!</h1>
+        <p class="success-subheading">Your room has been successfully assigned. Welcome to The Canopy Retreat!</p>
+        <div class="booking-confirmation-card">
+          <img src="https://i.pinimg.com/564x/df/f4/c9/dff4c90ec67abfb76a6aafae230783cd.jpg" alt="Hotel Room" class="bcc-img" />
+          <div class="bcc-body">
+            <div class="bcc-header-row">
+              <div>
+                <div class="bcc-hotel">The Canopy Retreat</div>
+                <div class="bcc-stars">★★★★★</div>
+              </div>
+              <div class="bcc-check-badge">✓ Checked In</div>
+            </div>
+            <div class="bcc-grid">
+              <div class="bcc-cell">
+                <div class="bcc-label">Guest Name</div>
+                <div class="bcc-val" id="suc-name">—</div>
+              </div>
+              <div class="bcc-cell">
+                <div class="bcc-label">Room Type</div>
+                <div class="bcc-val" id="suc-room">—</div>
+              </div>
+              <div class="bcc-cell">
+                <div class="bcc-label">Booking Ref</div>
+                <div class="bcc-val" id="suc-ref">—</div>
+              </div>
+              <div class="bcc-cell">
+                <div class="bcc-label">Check-in Date</div>
+                <div class="bcc-val" id="suc-date">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="post-checkin-cards">
+          <div class="pcc-item">
+            <span class="pcc-icon">📱</span>
+            <div>
+              <div class="pcc-title">Room Key</div>
+              <div class="pcc-sub">Digital key sent to your email</div>
+            </div>
+          </div>
+          <div class="pcc-item">
+            <span class="pcc-icon">🛎️</span>
+            <div>
+              <div class="pcc-title">Concierge</div>
+              <div class="pcc-sub">Available 24/7 at the front desk</div>
+            </div>
+          </div>
+          <div class="pcc-item">
+            <span class="pcc-icon">🍽️</span>
+            <div>
+              <div class="pcc-title">Dining</div>
+              <div class="pcc-sub">Breakfast served 7 AM – 10 AM</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-primary" style="margin-top:28px;" onclick="resetAll()">
+          New Check-In 🔄
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Toast -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
